@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FlipperXR : InteractivePuzzlePieceXR<HingeJoint>
 {
+   
     [Range(500f, 2000f)]
     public float power = 700f;
 

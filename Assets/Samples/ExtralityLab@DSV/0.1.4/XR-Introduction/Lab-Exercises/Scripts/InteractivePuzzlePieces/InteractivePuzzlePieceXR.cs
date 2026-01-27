@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-// using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 
 public abstract class InteractivePuzzlePieceXR<TComponent> : BaseInteractivePuzzlePieceXR
 where TComponent : Component
@@ -10,8 +10,8 @@ where TComponent : Component
 
 public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 {
-    public KeyCode interactKey = KeyCode.Space;
-    // public InputActionReference interactActionReference;
+    //public KeyCode interactKey = KeyCode.Space;
+    public InputActionReference interactActionReference;
 
     public Rigidbody rb;
     public AudioClip activateSound;
@@ -22,8 +22,8 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 
     protected void FixedUpdate ()
     {
-        if (Input.GetKey(interactKey) && m_IsControlable)
-        // if(interactActionReference.action.IsPressed() && m_IsControlable)
+        //if (Input.GetKey(interactKey) && m_IsControlable)
+         if(interactActionReference.action.IsPressed() && m_IsControlable)
         {
             ApplyActiveState ();
         }
@@ -35,14 +35,14 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
     
     void Update()
     {
-        if (deactivateSound != null && Input.GetKeyUp(interactKey))
-        // if(deactivateSound != null && interactActionReference.action.WasReleasedThisFrame())
+        // if (deactivateSound != null && Input.GetKeyUp(interactKey))
+         if(deactivateSound != null && interactActionReference.action.WasReleasedThisFrame())
         {
             puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
             puzzleAudioSource.PlayOneShot(deactivateSound);
         }
-        if (activateSound != null && Input.GetKeyDown(interactKey))
-        // if (activateSound != null && interactActionReference.action.WasPressedThisFrame())
+        //  if (activateSound != null && Input.GetKeyDown(interactKey))
+         if (activateSound != null && interactActionReference.action.WasPressedThisFrame())
         {
             puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
             puzzleAudioSource.PlayOneShot(activateSound);
