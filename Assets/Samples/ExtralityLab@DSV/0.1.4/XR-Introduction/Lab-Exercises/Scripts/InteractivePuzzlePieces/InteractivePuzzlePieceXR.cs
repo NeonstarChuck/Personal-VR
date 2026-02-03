@@ -10,7 +10,7 @@ where TComponent : Component
 
 public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 {
-    //public KeyCode interactKey = KeyCode.Space;
+    // public KeyCode interactKey = KeyCode.Space;
     public InputActionReference interactActionReference;
 
     public Rigidbody rb;
@@ -18,34 +18,54 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
     public AudioClip deactivateSound;
     public AudioSource puzzleAudioSource;
 
-    bool m_IsControlable;
+    bool m_IsControllable;
 
-    protected void FixedUpdate ()
+    public bool activateState = false; // Activates the object
+    public bool playOneTimeActivateAudio = false; // Audio for one-time activation audio
+    public bool playOneTimeDeactivateAudio = false; // Audio for one-time deactivation audio
+
+    void Update()
     {
-        //if (Input.GetKey(interactKey) && m_IsControlable)
-         if(interactActionReference.action.IsPressed() && m_IsControlable)
+        if (m_IsControllable)
         {
-            ApplyActiveState ();
+            // if(Input.GetKey(interactKey))
+            if(interactActionReference.action.IsPressed())
+            {
+                activateState = true;
+            }
+
+            // if(Input.GetKeyDown(interactKey) )
+            if (interactActionReference.action.WasPressedThisFrame())
+            {
+                playOneTimeActivateAudio = true;
+            }
+
+            // if(Input.GetKeyUp(interactKey) )
+            if(interactActionReference.action.WasReleasedThisFrame())
+            {
+                playOneTimeDeactivateAudio = true;
+                activateState = false;
+            }
+        }
+
+        // Check variable states to execute the actions
+        if (activateState)
+        {
+            ApplyActiveState();
         }
         else
         {
-            ApplyInactiveState ();
+            ApplyInactiveState();
         }
-    }
-    
-    void Update()
-    {
-        // if (deactivateSound != null && Input.GetKeyUp(interactKey))
-         if(deactivateSound != null && interactActionReference.action.WasReleasedThisFrame())
+
+        if (playOneTimeActivateAudio)
         {
-            puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
-            puzzleAudioSource.PlayOneShot(deactivateSound);
+            PlayOneTimeActivateAudio();
         }
-        //  if (activateSound != null && Input.GetKeyDown(interactKey))
-         if (activateSound != null && interactActionReference.action.WasPressedThisFrame())
+
+        if (playOneTimeDeactivateAudio)
         {
-            puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
-            puzzleAudioSource.PlayOneShot(activateSound);
+            PlayOneTimeDeactivateAudio();
         }
     }
 
@@ -53,8 +73,24 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 
     protected abstract void ApplyInactiveState ();
 
+    public void PlayOneTimeActivateAudio()
+    {
+        playOneTimeActivateAudio = false;
+        if(activateSound == null) return;
+        puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        puzzleAudioSource.PlayOneShot(activateSound);
+    }
+
+    public void PlayOneTimeDeactivateAudio()
+    {
+        playOneTimeDeactivateAudio = false;
+        if ( activateSound == null) return;
+        puzzleAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        puzzleAudioSource.PlayOneShot(deactivateSound);
+    }
+
     public void EnableControl ()
     {
-        m_IsControlable = true;
+        m_IsControllable = true;
     }
 }

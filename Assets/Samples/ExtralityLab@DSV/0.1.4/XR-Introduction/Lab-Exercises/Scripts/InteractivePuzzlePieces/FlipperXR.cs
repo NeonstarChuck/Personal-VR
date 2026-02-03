@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FlipperXR : InteractivePuzzlePieceXR<HingeJoint>
 {
-   
     [Range(500f, 2000f)]
     public float power = 700f;
 
