@@ -12,7 +12,7 @@ namespace ExtralityLab
         public bool autoSubscribe = false;
 
         [Header("Actuators Config")]
-        public Light virtualLightRGB;
+        public FlipperXR flipper;
         public bool currentState = false;
 
         private List<string> eventMessages = new List<string>();
@@ -47,7 +47,7 @@ namespace ExtralityLab
 
         protected override void OnConnected()
         {
-            // base.OnConnected(); // Uncommenting this will autosubscribe to topics
+            base.OnConnected(); // Uncommenting this will autosubscribe to topics
             Debug.Log($"MQTT: subscription {subscribedTopic} connected!");
             if (autoSubscribe)
                 SubscribeTopics();
@@ -98,10 +98,16 @@ namespace ExtralityLab
             bool parseValid = bool.TryParse(msg, out currentState);
             if (parseValid)
             {
-                // Activate the light bulb based on 
-                virtualLightRGB.enabled = bool.Parse(msg);
+                bool currentButtonState = bool.Parse(msg);
+                // Activate the flipper
+                flipper.activateState = currentButtonState;
+
+                // Activate audio
+                if(currentButtonState)
+                    flipper.playOneTimeActivateAudio = true;
+                else
+                    flipper.playOneTimeDeactivateAudio = true;
             }
-            else
             {
                 Debug.Log($"Error parsing bool from message: {msg}");
             }

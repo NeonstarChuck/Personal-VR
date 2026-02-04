@@ -3313,6 +3313,54 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef838aad987e6224cb9674bda577603a, type: 3}
+--- !u!1 &1681659814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681659816}
+  - component: {fileID: 1681659815}
+  m_Layer: 0
+  m_Name: WebSocketClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1681659815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681659814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee1741b8bc7e4d2e9f19b05af2114a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WebSocketClientExample
+  serverIP: 10.204.0.42
+  serverPort: 8081
+  flipper: {fileID: 5705112864281077529}
+  ledIntensity: 0
+--- !u!4 &1681659816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681659814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25025, y: -0.42833, z: 1.92648}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1769352604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3858,6 +3906,10 @@ PrefabInstance:
       value: FlipperXR
       objectReference: {fileID: 0}
     - target: {fileID: 8143725484479230084, guid: caa213cf95188443098e80837db19a73, type: 3}
+      propertyPath: esp32Controlled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143725484479230084, guid: caa213cf95188443098e80837db19a73, type: 3}
       propertyPath: interactActionReference
       value: 
       objectReference: {fileID: 187318761}
@@ -3971,3 +4023,4 @@ SceneRoots:
   - {fileID: 17885472}
   - {fileID: 709386101}
   - {fileID: 692216274}
+  - {fileID: 1681659816}

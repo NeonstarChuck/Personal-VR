@@ -2675,7 +2675,7 @@ MonoBehaviour:
   autoConnect: 1
   mqttUserName: unity
   mqttPassword: extrality
-  subscribedTopic: 0c86/digital
+  subscribedTopic: 0c86/boardBTN
   autoSubscribe: 0
   virtualLightRGB: {fileID: 133431590}
   currentState: 0

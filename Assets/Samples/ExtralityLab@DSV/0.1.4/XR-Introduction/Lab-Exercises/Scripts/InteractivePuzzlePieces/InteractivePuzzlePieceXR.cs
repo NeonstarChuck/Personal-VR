@@ -12,13 +12,13 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 {
     // public KeyCode interactKey = KeyCode.Space;
     public InputActionReference interactActionReference;
-
+    public bool esp32Controlled;
     public Rigidbody rb;
     public AudioClip activateSound;
     public AudioClip deactivateSound;
     public AudioSource puzzleAudioSource;
 
-    bool m_IsControllable;
+    bool m_IsControlable;
 
     public bool activateState = false; // Activates the object
     public bool playOneTimeActivateAudio = false; // Audio for one-time activation audio
@@ -26,22 +26,22 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 
     void Update()
     {
-        if (m_IsControllable)
+        if (m_IsControlable)
         {
             // if(Input.GetKey(interactKey))
-            if(interactActionReference.action.IsPressed())
+            if(interactActionReference.action.IsPressed()|| esp32Controlled && m_IsControlable)
             {
                 activateState = true;
             }
 
             // if(Input.GetKeyDown(interactKey) )
-            if (interactActionReference.action.WasPressedThisFrame())
+            if (interactActionReference.action.WasPressedThisFrame()|| esp32Controlled && m_IsControlable)
             {
                 playOneTimeActivateAudio = true;
             }
 
             // if(Input.GetKeyUp(interactKey) )
-            if(interactActionReference.action.WasReleasedThisFrame())
+            if(interactActionReference.action.WasReleasedThisFrame()|| esp32Controlled && m_IsControlable)
             {
                 playOneTimeDeactivateAudio = true;
                 activateState = false;
@@ -91,6 +91,6 @@ public abstract class BaseInteractivePuzzlePieceXR : MonoBehaviour
 
     public void EnableControl ()
     {
-        m_IsControllable = true;
+        m_IsControlable = true;
     }
 }
