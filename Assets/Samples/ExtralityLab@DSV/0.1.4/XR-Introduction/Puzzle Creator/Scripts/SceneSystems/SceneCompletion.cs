@@ -11,11 +11,16 @@ public class SceneCompletion : MonoBehaviour
     public ScreenFader screenFader;
     public GameObject panel;
 
+
     // Called when target of level is achieved
-    public void CompleteLevel (float time)
-    {
-        panel.SetActive (true);
-    }
+    public WebSocketClientExample wsController; // Drag WebSocket script here in Inspector
+
+public void CompleteLevel(float time) 
+{
+    panel.SetActive(true);           // Open the panel
+   
+}
+
 
     // UI Button
     public void ReloadLevel ()

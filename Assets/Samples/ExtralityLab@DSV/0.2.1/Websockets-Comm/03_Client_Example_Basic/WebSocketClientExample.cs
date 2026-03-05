@@ -2,6 +2,8 @@ using UnityEngine;
 using NativeWebSocket;
 using UnityEngine.Events;
 using System;
+using UnityEngine.SceneManagement;
+
 
 
 #if UNITY_EDITOR
@@ -11,11 +13,13 @@ using UnityEditor;
 public class WebSocketClientExample : MonoBehaviour
 {
     private WebSocket websocket;
-    public string serverIP = "XXX.XXX.XXX.XXX"; // Replace with your server's IP address
+    public string serverIP = "10.204.0.42"; // Replace with your server's IP address
     public int serverPort = 8081; // Replace with your server's port number (8081 is the default)
     public FlipperXR flipper;
     [Range(0, 255)]
     public int ledIntensity = 0;
+    public ScreenFader screenFader;
+   
 
     async void Start()
     {
@@ -127,15 +131,36 @@ public class WebSocketClientExample : MonoBehaviour
             {
 
                 flipper.esp32Controlled = true;
-                Debug.Log("ESP32 Button Pressed");
+                flipper.puzzleAudioSource.PlayOneShot(flipper.activateSound); //Triggers activation sound
+
+                Debug.Log("Flipper Activated via WebSocket");
             }
             if (valueParsed == "0")
             {
-                 flipper.esp32Controlled = false;
-                Debug.Log("ESP32 Button Released");
+                flipper.esp32Controlled = false;
+                flipper.puzzleAudioSource.PlayOneShot(flipper.deactivateSound); //Triggers deactivation sound
+
+                Debug.Log("Flipper Deactivated via WebSocket");
+            }
+            if (valueParsed == "3")
+            {
+                
+                screenFader.FadeOut(() => SceneManager.LoadSceneAsync(gameObject.scene.buildIndex));
+                Debug.Log("Flipper Activated via WebSocket");
             }
 
+            if (valueParsed == "4")
+            {
+                
+                screenFader.FadeOut(() => SceneManager.LoadSceneAsync(gameObject.scene.buildIndex));
+                Debug.Log("Flipper Activated via WebSocket");
+            }
+
+            
+            
+            
         }
+        
 
     }
 
